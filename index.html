@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Curricular Economía - UNAP</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdf6f0;
+      color: #333;
+      padding: 2rem;
+    }
+    h1, h2 {
+      font-style: italic;
+      color: #800000;
+    }
+    .acciones {
+      margin-bottom: 1.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-right: 1rem;
+      font-style: italic;
+      background-color: #800000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #ffe0e0;
+    }
+    .fucsia {
+      background-color: #ff66cc;
+    }
+    .rosado {
+      background-color: #ffcce5;
+    }
+    .morado {
+      background-color: #d8b3ff;
+    }
+    .lila {
+      background-color: #e6ccff;
+    }
+    .creditos {
+      font-style: italic;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #006400;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular Interactiva - Economía UNAP</h1>
+  <div class="acciones">
+    <button onclick="window.print()">Descargar en PDF</button>
+    <button onclick="location.reload()">Restaurar actividad</button>
+  </div>
+  <div class="creditos" id="total-creditos">Créditos aprobados: 0</div>
+
+  <div id="malla"></div>
+
+  <script>
+    const cursos = [
+      {
+        ciclo: 1,
+        cursos: [
+          { codigo: "023B10002", nombre: "MATEMÁTICA", creditos: 4, prerrequisitos: [] },
+          { codigo: "023B10004", nombre: "DERECHO CONSTITUCIONAL Y DERECHOS HUMANOS", creditos: 3, prerrequisitos: [] },
+          { codigo: "9080", nombre: "NATACION", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10010", nombre: "FUNDAMENTOS DE ADMINISTRACION", creditos: 3, prerrequisitos: [] },
+          { codigo: "023B10001", nombre: "LENGUAJE, REDACCIÓN Y ORATORIA", creditos: 4, prerrequisitos: [] },
+          { codigo: "023B10008", nombre: "FILOSOFIA", creditos: 3, prerrequisitos: [] },
+          { codigo: "9110", nombre: "VOLEIBOL", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10009", nombre: "CREATIVIDAD E INNOVACION EMPRESARIAL", creditos: 3, prerrequisitos: [] },
+          { codigo: "9050", nombre: "GIMNASIA", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10003", nombre: "INGLES BÁSICO I", creditos: 2, prerrequisitos: [] },
+          { codigo: "9040", nombre: "FUTBOL", creditos: 1, prerrequisitos: [], clase: 'lila' },
+        ]
+      },
+      {
+        ciclo: 2,
+        cursos: [
+          { codigo: "9100", nombre: "TEATRO", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10014", nombre: "MATEMATICA II", creditos: 4, prerrequisitos: ["023B10002"] },
+          { codigo: "9090", nombre: "ORATORIA", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10012", nombre: "FUNDAMENTOS DE CONTABILIDAD", creditos: 3, prerrequisitos: [] },
+          { codigo: "023B10011", nombre: "FUNDAMENTOS DE ECONOMIA", creditos: 3, prerrequisitos: [] },
+          { codigo: "9095", nombre: "PRIMEROS AUXILIOS", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "9010", nombre: "BASQUETBOL", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "9065", nombre: "FOLKLORE", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10007", nombre: "INGLES BÁSICO II", creditos: 2, prerrequisitos: ["023B10003"] },
+          { codigo: "9005", nombre: "DEFENSA PERSONAL", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10005", nombre: "REALIDAD NACIONAL Y DESARROLLO REGIONAL AMAZÓNICO", creditos: 4, prerrequisitos: [] },
+          { codigo: "9000", nombre: "ATLETISMO", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "9030", nombre: "DANZAS", creditos: 1, prerrequisitos: [], clase: 'lila' },
+          { codigo: "023B10006", nombre: "METODOLOGÍA DE LA INVESTIGACIÓN CIENTÍFICA", creditos: 3, prerrequisitos: [] },
+        ]
+      },
+      // Continúa con los ciclos 3 al 10...
+      {
+        ciclo: 3,
+        cursos: [
+          { codigo: "023B10015", nombre: "MICROECONOMIA", creditos: 4, prerrequisitos: ["023B10011"] },
+          { codigo: "023B10016", nombre: "MATEMATICA III", creditos: 4, prerrequisitos: ["023B10014"] },
+          { codigo: "023B10018", nombre: "ESTADISTICA I", creditos: 4, prerrequisitos: ["023B10014"] },
+          { codigo: "023B10017", nombre: "COSTO Y PRESUPUESTO EMPRESARIAL", creditos: 3, prerrequisitos: ["023B10012"] },
+          { codigo: "023B10019", nombre: "DOCTRINAS ECONOMICAS", creditos: 3, prerrequisitos: ["023B10011"] },
+          { codigo: "023B10020", nombre: "HISTORIA ECONOMICA DEL PERU", creditos: 3, prerrequisitos: [] }
+        ]
+      },
+      {
+        ciclo: 4,
+        cursos: [
+          { codigo: "023B10026", nombre: "SOCIOLOGIA", creditos: 2, prerrequisitos: ["023B10008"] },
+          { codigo: "023B10025", nombre: "CONTABILIDAD GERENCIAL", creditos: 3, prerrequisitos: ["023B10017"] },
+          { codigo: "023B10024", nombre: "ESTADISTICA II", creditos: 4, prerrequisitos: ["023B10018"] },
+          { codigo: "023B10023", nombre: "MATEMATICA FINANCIERA", creditos: 4, prerrequisitos: ["023B10014"] },
+          { codigo: "023B10021", nombre: "ANALISIS MICROECONOMICO", creditos: 4, prerrequisitos: ["023B10015"] },
+          { codigo: "023B10022", nombre: "MATEMATICA IV", creditos: 4, prerrequisitos: ["023B10016"] }
+        ]
+      },
+      {
+        ciclo: 5,
+        cursos: [
+          { codigo: "023B10032", nombre: "ANALISIS Y GESTION DE RIESGO", creditos: 3, prerrequisitos: ["023B10022"] },
+          { codigo: "023B10028", nombre: "TEORIA DE LA REGULACION ECONOMICA", creditos: 4, prerrequisitos: ["023B10021"] },
+          { codigo: "023B10031", nombre: "PROGRAMAS INFORMATICOS PARA LA ECONOMIA", creditos: 4, prerrequisitos: ["023B10024"] },
+          { codigo: "023B10029", nombre: "ECONOMIA DE RECURSOS NATURALES Y MEDIO AMBIENTE", creditos: 4, prerrequisitos: ["023B10021"] },
+          { codigo: "023B10030", nombre: "RESPONSABILIDAD SOCIAL", creditos: 2, prerrequisitos: [] },
+          { codigo: "023B10027", nombre: "MACROECONOMIA", creditos: 4, prerrequisitos: ["023B10011"] }
+        ]
+      },
+      {
+        ciclo: 6,
+        cursos: [
+          { codigo: "023B10033", nombre: "ANALISIS MACROECONOMICO", creditos: 4, prerrequisitos: ["023B10027"] },
+          { codigo: "023B10038", nombre: "ECONOMIA DEL CAPITAL HUMANO Y DEL EMPLEO", creditos: 3, prerrequisitos: ["023B10027"] },
+          { codigo: "023B10035", nombre: "DEONTOLOGIA PROFESIONAL", creditos: 3, prerrequisitos: [] },
+          { codigo: "023B10034", nombre: "OPTIMIZACION ECONOMICA", creditos: 4, prerrequisitos: ["023B10022"] },
+          { codigo: "023B10037", nombre: "INVESTIGACION DE MERCADOS", creditos: 4, prerrequisitos: ["023B10031"] },
+          { codigo: "023B10036", nombre: "ECONOMETRIA I", creditos: 4, prerrequisitos: ["023B10024"] }
+        ]
+      },
+      {
+        ciclo: 7,
+        cursos: [
+          { codigo: "023B10039", nombre: "ECONOMIA FINANCIERA", creditos: 4, prerrequisitos: ["023B10025"] },
+          { codigo: "023B10044", nombre: "FINANZAS CORPORATIVAS", creditos: 3, prerrequisitos: ["023B10032"] },
+          { codigo: "023B10040", nombre: "TEORIA MONETARIA", creditos: 4, prerrequisitos: ["023B10033"] },
+          { codigo: "023B10041", nombre: "ECONOMETRIA II", creditos: 4, prerrequisitos: ["023B10036"] },
+          { codigo: "023B10045", nombre: "SEMINARIO DE CUENTAS NACIONALES", creditos: 3, prerrequisitos: ["023B10027"] },
+          { codigo: "023B10043", nombre: "FORMULACION Y EVALUACION DE PROYECTOS I", creditos: 4, prerrequisitos: ["023B10037"] },
+          { codigo: "023B10042", nombre: "DERECHO ECONOMICO", creditos: 3, prerrequisitos: ["023B10004"] }
+        ]
+      },
+      {
+        ciclo: 8,
+        cursos: [
+          { codigo: "023B10046", nombre: "PLANIFICACION ESTRATEGICA", creditos: 4, prerrequisitos: ["023B10033"] },
+          { codigo: "023B10050", nombre: "MACROECONOMIA DINAMICA", creditos: 4, prerrequisitos: ["023B10034"] },
+          { codigo: "023B10049", nombre: "FINANZAS PUBLICAS", creditos: 3, prerrequisitos: ["023B10040"] },
+          { codigo: "023B10047", nombre: "TEORIA DEL CRECIMIENTO Y DESARROLLO", creditos: 4, prerrequisitos: ["023B10033"] },
+          { codigo: "023B10052", nombre: "SEMINARIO DE BANCA Y DE SEGUROS", creditos: 3, prerrequisitos: ["023B10032"] },
+          { codigo: "023B10048", nombre: "FORMULACION Y EVALUACION DE PROYECTOS II", creditos: 4, prerrequisitos: ["023B10043"] },
+          { codigo: "023B10051", nombre: "TOPICOS DE ECONOMETRIA", creditos: 3, prerrequisitos: ["023B10041"] }
+        ]
+      },
+      {
+        ciclo: 9,
+        cursos: [
+          { codigo: "023B10058", nombre: "SEMINARIO DE ECONOMIA TRIBUTARIA", creditos: 3, prerrequisitos: ["023B10039"] },
+          { codigo: "023B10053", nombre: "COMERCIO INTERNACIONAL", creditos: 4, prerrequisitos: ["023B10033"] },
+          { codigo: "023B10055", nombre: "SEMINARIO DE TENDENCIAS Y PERSPECTIVAS ECONOMICAS", creditos: 2, prerrequisitos: ["023B10047"] },
+          { codigo: "023B10057", nombre: "SEMINARIO DE DEMOGRAFIA Y REALIDAD SOCIOECONOMICAS", creditos: 3, prerrequisitos: ["023B10027"] },
+          { codigo: "023B10056", nombre: "SEMINARIO DE TESIS", creditos: 4, prerrequisitos: ["023B10006"] },
+          { codigo: "023B10054", nombre: "POLITICA ECONOMICA", creditos: 4, prerrequisitos: ["023B10046"] }
+        ]
+      },
+      {
+        ciclo: 10,
+        cursos: [
+          { codigo: "023B10061", nombre: "TRABAJO DE INVESTIGACIÓN", creditos: 5, prerrequisitos: ["023B10056"] },
+          { codigo: "023B10062", nombre: "ECONOMIA REGIONAL", creditos: 3, prerrequisitos: ["023B10053"] },
+          { codigo: "023B10060", nombre: "PRACTICA PRE PROFESIONAL", creditos: 5, prerrequisitos: [] },
+          { codigo: "023B10059", nombre: "ECONOMIA Y GESTION PUBLICA", creditos: 4, prerrequisitos: ["023B10054"] }
+        ]
+      },`
+    }
+  ]
+}
+    ];
+
+    let totalCreditos = 0;
+    const contenedor = document.getElementById('malla');
+
+    cursos.forEach((bloque) => {
+      const tabla = document.createElement('table');
+      const encabezado = document.createElement('caption');
+      encabezado.innerHTML = `<h2>Ciclo ${bloque.ciclo}</h2>`;
+      tabla.appendChild(encabezado);
+
+      tabla.innerHTML += `
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Asignatura</th>
+            <th>Créditos</th>
+            <th>Pre Requisitos</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      bloque.cursos.forEach((c) => {
+        totalCreditos += c.creditos;
+        const fila = document.createElement('tr');
+        if (c.clase) fila.classList.add(c.clase);
+        fila.innerHTML = `
+          <td>${c.codigo}</td>
+          <td>${c.nombre}</td>
+          <td>${c.creditos}</td>
+          <td>${c.prerrequisitos.length > 0 ? c.prerrequisitos.join(', ') : 'No tiene requisitos'}</td>
+        `;
+        tabla.appendChild(fila);
+      });
+      tabla.innerHTML += '</tbody>';
+      contenedor.appendChild(tabla);
+    });
+
+    document.getElementById('total-creditos').textContent = `Créditos aprobados: ${totalCreditos}`;
+  </script>
+</body>
+</html>
